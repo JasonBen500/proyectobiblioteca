@@ -26,6 +26,12 @@ public class PrestamosService {
                 .collect(Collectors.toList());
     }
 
+    public List<PrestamosDTO> mostrarActivos() {
+        return prestamosRepository.findByEstadoTrue().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     public PrestamosDTO agregar(PrestamosDTO dto) {
         Prestamos prestamo = convertToEntity(dto);
         return convertToDTO(prestamosRepository.save(prestamo));

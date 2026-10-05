@@ -24,6 +24,12 @@ public class LibrosService {
                 .collect(Collectors.toList());
     }
 
+    public List<LibrosDTO> mostrarActivos() {
+    return librosRepository.findByEstadoTrue().stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
+}
+
     public LibrosDTO agregar(LibrosDTO dto) {
         Libros libro = convertToEntity(dto);
         return convertToDTO(librosRepository.save(libro));

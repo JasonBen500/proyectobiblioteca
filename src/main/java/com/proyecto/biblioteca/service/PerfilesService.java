@@ -24,6 +24,12 @@ public class PerfilesService {
                 .collect(Collectors.toList());
     }
 
+    public List<PerfilesDTO> mostrarActivos() {
+        return perfilesRepository.findByEstadoTrue().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     public PerfilesDTO agregar(PerfilesDTO dto) {
         Perfiles perfil = convertToEntity(dto);
         return convertToDTO(perfilesRepository.save(perfil));

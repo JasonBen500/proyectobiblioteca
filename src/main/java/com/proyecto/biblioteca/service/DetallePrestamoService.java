@@ -26,6 +26,19 @@ public class DetallePrestamoService {
                 .collect(Collectors.toList());
     }
 
+    public List<DetallePrestamoDTO> mostrarActivos() {
+        return detallePrestamoRepository.findByEstadoTrue()
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<DetallePrestamoDTO> mostrarPorPrestamo(Integer idPrestamo) {
+        return detallePrestamoRepository.findByIdPrestamo_IdPrestamo(idPrestamo).stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     public DetallePrestamoDTO agregar(DetallePrestamoDTO dto) {
         DetallePrestamo detalle = convertToEntity(dto);
         return convertToDTO(detallePrestamoRepository.save(detalle));

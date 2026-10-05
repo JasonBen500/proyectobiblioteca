@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.proyecto.biblioteca.dto.LoginRequestDTO;
+import com.proyecto.biblioteca.dto.LoginResponseDTO;
 import com.proyecto.biblioteca.dto.UsuariosDTO;
 import com.proyecto.biblioteca.entity.Perfiles;
 import com.proyecto.biblioteca.entity.Usuarios;
@@ -21,6 +23,12 @@ public class UsuariosService {
 
     public List<UsuariosDTO> mostrar() {
         return usuariosRepository.findAll().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<UsuariosDTO> mostrarActivos() {
+        return usuariosRepository.findByEstadoTrue().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
@@ -75,5 +83,25 @@ public class UsuariosService {
         usuario.setEstado(dto.getEstado());
         usuario.setPerfiles(new Perfiles(dto.getIdPerfil()));
         return usuario;
+    }
+
+    public LoginResponseDTO login(LoginRequestDTO dto) {
+        Usuarios usuario = usuariosRepository.findByUsuario(dto.getUsuario())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        if (!usuario.getContrasena().equals(dto.getContrasena())) {
+            throw new RuntimeException("Contraseña incorrecta");
+        }
+        if (!usuario.getEstado()) {
+            throw new RuntimeException("Usuario inactivo");
+        }
+
+        LoginResponseDTO response = new LoginResponseDTO();
+        response.setIdUsuario(usuario.getIdUsuario());
+        response.setNombre(usuario.getNombre());
+        response.setUsuario(usuario.getUsuario());
+        response.setIdPerfil(usuario.getPerfiles().getIdPerfil());
+        response.setNombrePerfil(usuario.getPerfiles().getNombre());
+        return response;
     }
 }

@@ -24,6 +24,12 @@ public class SociosService {
                 .collect(Collectors.toList());
     }
 
+    public List<SociosDTO> mostrarActivos() {
+        return sociosRepository.findByEstadoTrue().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     public SociosDTO agregar(SociosDTO dto) {
         Socios socio = convertToEntity(dto);
         return convertToDTO(sociosRepository.save(socio));
