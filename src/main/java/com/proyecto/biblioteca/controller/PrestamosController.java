@@ -21,7 +21,7 @@ import com.proyecto.biblioteca.service.PrestamosService;
 
 @RestController
 @RequestMapping("/prestamos")
-@CrossOrigin (origins = "http://localhost:5173/")
+@CrossOrigin(origins = "http://localhost:5173/")
 public class PrestamosController {
 
     private final PrestamosService prestamosService;
@@ -41,10 +41,10 @@ public class PrestamosController {
     }
 
     @PostMapping
-    public ResponseEntity<MessageResponse> agregar(@RequestBody PrestamosDTO dto) {
+    public ResponseEntity<?> agregar(@RequestBody PrestamosDTO dto) {
         try {
-            prestamosService.agregar(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(new MessageResponse("Préstamo creado correctamente"));
+            PrestamosDTO creado = prestamosService.agregar(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(creado);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new MessageResponse("Error al crear el préstamo: " + e.getMessage()));

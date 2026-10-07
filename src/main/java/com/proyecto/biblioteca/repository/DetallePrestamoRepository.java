@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.proyecto.biblioteca.entity.DetallePrestamo;
 
 @Repository
+// DetallePrestamoRepository.java
 public interface DetallePrestamoRepository extends JpaRepository<DetallePrestamo, Integer> {
-    List<DetallePrestamo> findByEstadoTrue();
-
     List<DetallePrestamo> findByIdPrestamo_IdPrestamo(Integer idPrestamo);
+    // sin findByEstadoTrue()
 }

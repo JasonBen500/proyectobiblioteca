@@ -10,4 +10,6 @@ import com.proyecto.biblioteca.entity.Socios;
 @Repository
 public interface SociosRepository extends JpaRepository<Socios, Integer> {
     List<Socios> findByEstadoTrue();
+
+    List<Socios> findByNombreContainingIgnoreCase(String nombre);
 }

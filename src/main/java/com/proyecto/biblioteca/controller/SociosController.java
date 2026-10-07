@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.biblioteca.dto.MessageResponse;
@@ -40,14 +41,18 @@ public class SociosController {
         return sociosService.mostrarActivos();
     }
 
+    @GetMapping("/buscar")
+    public List<SociosDTO> buscar(@RequestParam String nombre) {
+        return sociosService.buscar(nombre);
+    }
+
     @PostMapping
-    public ResponseEntity<MessageResponse> agregar(@RequestBody SociosDTO dto) {
+    public ResponseEntity<?> agregar(@RequestBody SociosDTO dto) {
         try {
-            sociosService.agregar(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(new MessageResponse("Socio creado correctamente"));
+            SociosDTO creado = sociosService.agregar(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(creado);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new MessageResponse("Error al crear el socio: " + e.getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Error al crear el socio: " + e.getMessage()));
         }
     }
 
@@ -57,8 +62,7 @@ public class SociosController {
             sociosService.modificar(id, dto);
             return ResponseEntity.ok(new MessageResponse("Socio modificado correctamente"));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new MessageResponse("Error al modificar el socio: " + e.getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Error al modificar el socio: " + e.getMessage()));
         }
     }
 
@@ -68,8 +72,7 @@ public class SociosController {
             sociosService.eliminar(id);
             return ResponseEntity.ok(new MessageResponse("Socio eliminado correctamente"));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new MessageResponse("Error al eliminar el socio: " + e.getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Error al eliminar el socio: " + e.getMessage()));
         }
     }
 
@@ -79,8 +82,8 @@ public class SociosController {
             sociosService.anular(id);
             return ResponseEntity.ok(new MessageResponse("Socio anulado correctamente"));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new MessageResponse("Error al anular el socio: " + e.getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Error al anular el socio: " + e.getMessage()));
         }
     }
 }
+

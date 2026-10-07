@@ -30,6 +30,12 @@ public class SociosService {
                 .collect(Collectors.toList());
     }
 
+    public List<SociosDTO> buscar(String nombre) {
+        return sociosRepository.findByNombreContainingIgnoreCase(nombre).stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     public SociosDTO agregar(SociosDTO dto) {
         Socios socio = convertToEntity(dto);
         return convertToDTO(sociosRepository.save(socio));
