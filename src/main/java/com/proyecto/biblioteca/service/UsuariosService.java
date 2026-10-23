@@ -35,6 +35,7 @@ public class UsuariosService {
 
     public UsuariosDTO agregar(UsuariosDTO dto) {
         Usuarios usuario = convertToEntity(dto);
+        usuario.setIdUsuario(null);
         return convertToDTO(usuariosRepository.save(usuario));
     }
 
@@ -64,12 +65,15 @@ public class UsuariosService {
     private UsuariosDTO convertToDTO(Usuarios usuario) {
         UsuariosDTO dto = new UsuariosDTO();
         dto.setIdUsuario(usuario.getIdUsuario());
-        dto.setIdPerfil(usuario.getIdUsuario());
         dto.setNombre(usuario.getNombre());
         dto.setUsuario(usuario.getUsuario());
         dto.setContrasena(usuario.getContrasena());
         dto.setCorreo(usuario.getCorreo());
         dto.setEstado(usuario.getEstado());
+        if (usuario.getPerfiles() != null) {
+            dto.setIdPerfil(usuario.getPerfiles().getIdPerfil());
+            dto.setNombrePerfil(usuario.getPerfiles().getNombre());
+        }
         return dto;
     }
 

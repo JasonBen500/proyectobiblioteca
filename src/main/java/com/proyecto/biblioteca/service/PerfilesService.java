@@ -32,6 +32,7 @@ public class PerfilesService {
 
     public PerfilesDTO agregar(PerfilesDTO dto) {
         Perfiles perfil = convertToEntity(dto);
+        perfil.setIdPerfil(null);
         return convertToDTO(perfilesRepository.save(perfil));
     }
 

@@ -21,7 +21,7 @@ import com.proyecto.biblioteca.service.DetallePrestamoService;
 
 @RestController
 @RequestMapping("/detalle-prestamo")
-@CrossOrigin (origins = "http://localhost:5173/")
+@CrossOrigin(origins = "http://localhost:5173/")
 public class DetallePrestamoController {
 
     private final DetallePrestamoService detallePrestamoService;
@@ -78,10 +78,10 @@ public class DetallePrestamoController {
     public ResponseEntity<MessageResponse> anular(@PathVariable Integer id, @RequestBody DetallePrestamoDTO dto) {
         try {
             detallePrestamoService.anular(id, dto);
-            return ResponseEntity.ok(new MessageResponse("Detalle de préstamo anulado correctamente"));
+            return ResponseEntity.ok(new MessageResponse("Libro devuelto correctamente"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new MessageResponse("Error al anular el detalle de préstamo: " + e.getMessage()));
+                    .body(new MessageResponse("Error al devolver el libro: " + e.getMessage()));
         }
     }
 }

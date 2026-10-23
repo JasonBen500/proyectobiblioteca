@@ -27,7 +27,7 @@ import java.util.Date;
 @Entity
 @Table(name = "detalle_prestamo")
 @NamedQueries({
-    @NamedQuery(name = "DetallePrestamo.findAll", query = "SELECT d FROM DetallePrestamo d")})
+        @NamedQuery(name = "DetallePrestamo.findAll", query = "SELECT d FROM DetallePrestamo d") })
 public class DetallePrestamo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,6 +39,8 @@ public class DetallePrestamo implements Serializable {
     @Column(name = "fecha_devolucion_real")
     @Temporal(TemporalType.DATE)
     private Date fechaDevolucionReal;
+    @Column(name = "estado")
+    private Boolean estado = true;
     @JoinColumn(name = "id_libro", referencedColumnName = "id_libro")
     @ManyToOne(optional = false)
     private Libros idLibro;
@@ -69,6 +71,14 @@ public class DetallePrestamo implements Serializable {
         this.fechaDevolucionReal = fechaDevolucionReal;
     }
 
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
     public Libros getIdLibro() {
         return idLibro;
     }
@@ -94,12 +104,12 @@ public class DetallePrestamo implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof DetallePrestamo)) {
             return false;
         }
         DetallePrestamo other = (DetallePrestamo) object;
-        if ((this.idDetallePrestamo == null && other.idDetallePrestamo != null) || (this.idDetallePrestamo != null && !this.idDetallePrestamo.equals(other.idDetallePrestamo))) {
+        if ((this.idDetallePrestamo == null && other.idDetallePrestamo != null)
+                || (this.idDetallePrestamo != null && !this.idDetallePrestamo.equals(other.idDetallePrestamo))) {
             return false;
         }
         return true;
@@ -109,5 +119,5 @@ public class DetallePrestamo implements Serializable {
     public String toString() {
         return "com.proyecto.biblioteca.entity.DetallePrestamo[ idDetallePrestamo=" + idDetallePrestamo + " ]";
     }
-    
+
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.biblioteca.dto.MessageResponse;
+import com.proyecto.biblioteca.dto.PrestamoRegistroDTO;
 import com.proyecto.biblioteca.dto.PrestamosDTO;
 import com.proyecto.biblioteca.service.PrestamosService;
 
@@ -48,6 +49,17 @@ public class PrestamosController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new MessageResponse("Error al crear el préstamo: " + e.getMessage()));
+        }
+    }
+
+    @PostMapping("/registrar")
+    public ResponseEntity<?> registrar(@RequestBody PrestamoRegistroDTO dto) {
+        try {
+            PrestamosDTO creado = prestamosService.registrar(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(creado);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new MessageResponse("Error al registrar el préstamo: " + e.getMessage()));
         }
     }
 

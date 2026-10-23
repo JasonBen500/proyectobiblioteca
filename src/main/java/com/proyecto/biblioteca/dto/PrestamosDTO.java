@@ -4,7 +4,7 @@ import java.util.Date;
 
 import lombok.Data;
 
-@Data
+@Data 
 public class PrestamosDTO {
     private Integer idPrestamo;
     private Integer idSocio;
@@ -12,4 +12,6 @@ public class PrestamosDTO {
     private Date fechaPrestamo;
     private Date fechaDevolucionEsperada;
     private Boolean estado;
+    private String nombreSocio;
+    private String nombreUsuario;
 }

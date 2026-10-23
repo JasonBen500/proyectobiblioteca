@@ -2,8 +2,8 @@ package com.proyecto.biblioteca.dto;
 
 import lombok.Data;
 
-@Data 
-    public class UsuariosDTO {
+@Data
+public class UsuariosDTO {
     private Integer idUsuario;
     private Integer idPerfil;
     private String nombre;
@@ -11,4 +11,5 @@ import lombok.Data;
     private String contrasena;
     private String correo;
     private Boolean estado;
+    private String nombrePerfil;
 }

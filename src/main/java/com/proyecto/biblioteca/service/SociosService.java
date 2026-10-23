@@ -38,6 +38,7 @@ public class SociosService {
 
     public SociosDTO agregar(SociosDTO dto) {
         Socios socio = convertToEntity(dto);
+        socio.setIdSocio(null);
         return convertToDTO(sociosRepository.save(socio));
     }
 
